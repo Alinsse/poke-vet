@@ -1,0 +1,31 @@
+.header {
+  background: #E40F0F;
+  color: #fff;
+  height: var(--header-height);
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumbs {
+  font-size: 0.95rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.breadcrumbLink {
+  color: #fff;
+  text-decoration: none;
+  opacity: 0.95;
+}
+
+.breadcrumbCurrent {
+  color: #fff;
+  font-weight: 600;
+}
+
+.separator {
+  margin: 0 0.5rem;
+  opacity: 0.9;
+}
