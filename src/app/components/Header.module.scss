@@ -1,43 +1,79 @@
 .header {
   background: #E40F0F; /* vermelho */
   color: #fff;
-  padding: 1rem;
+  padding: 2rem 4rem;
   display: flex;
   flex-direction: column; /* três linhas empilhadas */
   align-items: flex-start;
   gap: 0.25rem;
+
+  @media (max-width: 600px) {
+    padding: 1rem 0.5rem;
+    font-size: 0.95rem;
+  }
+}
+
+.responsive {
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .breadcrumbs {
   display: flex;
-  gap: 0.5rem;
-  font-size: 0.95rem;
+  flex-wrap: wrap;
   align-items: center;
+  gap: 0.25rem;
+
+  @media (max-width: 600px) {
+    font-size: 0.9rem;
+    gap: 0.15rem;
+  }
 }
 
 .breadcrumbLink {
   color: #fff;
   text-decoration: none;
   opacity: 0.95;
+
+  @media (max-width: 600px) {
+    padding: 0.1rem 0.2rem;
+  }
 }
 
 .breadcrumbCurrent {
   color: #fff;
   font-weight: 600;
+
+  @media (max-width: 600px) {
+    font-weight: 600;
+  }
 }
 
 .separator {
-  margin: 0 0.5rem;
+  margin: 0 0.2rem;
   opacity: 0.9;
+
+  @media (max-width: 600px) {
+    margin: 0 0.1rem;
+  }
 }
 
 .pageTitle {
   font-size: 1.5rem;
   font-weight: 700;
+
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+  }
 }
 
 .pageSubtitle {
   font-size: 1.1rem;
   font-weight: 500;
   opacity: 0.9;
+
+  @media (max-width: 600px) {
+    font-size: 0.95rem;
+  }
 }

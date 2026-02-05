@@ -12,6 +12,12 @@ function prettify(segment: string) {
 
 export default function Header() {
   const pathname = usePathname() || '/';
+
+  // 👉 NÃO renderiza o Header na Home
+  if (pathname === '/' || pathname === '/home') {
+    return null;
+  }
+
   const segments = pathname.split('/').filter(Boolean);
 
   const labels: Record<string, string> = {
@@ -20,7 +26,6 @@ export default function Header() {
     'quem-somos': 'Quem Somos',
   };
 
-  // Breadcrumb dinâmico
   const breadcrumbParts = [{ href: '/home', label: 'Home' }].concat(
     segments.map((seg, i) => ({
       href: '/' + segments.slice(0, i + 1).join('/'),
@@ -28,7 +33,6 @@ export default function Header() {
     }))
   );
 
-  // Título e subtítulo dinâmicos
   let pageTitle = '';
   let pageSubtitle = '';
 
@@ -41,8 +45,7 @@ export default function Header() {
   }
 
   return (
-    <header className={styles.header} aria-label="Cabeçalho da página">
-      {/* Breadcrumb */}
+    <header className={`${styles.header} ${styles.responsive}`} aria-label="Cabeçalho da página">
       <nav className={styles.breadcrumbs}>
         {breadcrumbParts.map((p, idx) => {
           const isLast = idx === breadcrumbParts.length - 1;
@@ -63,10 +66,7 @@ export default function Header() {
         })}
       </nav>
 
-      {/* Título da página */}
       <div className={styles.pageTitle}>{pageTitle}</div>
-
-      {/* Subtítulo / slogan */}
       <div className={styles.pageSubtitle}>{pageSubtitle}</div>
     </header>
   );
