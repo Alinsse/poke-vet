@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 export async function GET(request: Request) {
   const url = new URL(request.url);
   const date = url.searchParams.get('date');
+
   if (!date) {
     return NextResponse.json({ error: 'Parâmetro date é obrigatório' }, { status: 400 });
   }

@@ -6,5 +6,6 @@ export async function GET() {
     d.setDate(d.getDate() + i);
     return d.toISOString().split('T')[0]; // YYYY-MM-DD
   });
+
   return NextResponse.json(dates);
 }
