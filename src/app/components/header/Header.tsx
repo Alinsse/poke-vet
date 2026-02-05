@@ -13,7 +13,6 @@ function prettify(segment: string) {
 export default function Header() {
   const pathname = usePathname() || '/';
 
-  // 👉 NÃO renderiza o Header na Home
   if (pathname === '/' || pathname === '/home') {
     return null;
   }

@@ -1,9 +1,9 @@
 :root {
-  --background: #ffffff; /* fundo branco */
-  --foreground: #000000; /* texto preto */
+  --background: #ffffff; 
+  --foreground: #000000; 
   --header-height: 72px;
   --footer-height: 64px;
-  --font-inter: 'Inter', sans-serif; /* fonte global */
+  --font-inter: 'Inter', sans-serif; 
 }
 
 html, body {
