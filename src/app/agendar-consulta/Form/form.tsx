@@ -15,33 +15,19 @@ interface ApiItem {
 export default function FormAgendamento() {
   const [nome, setNome] = useState('');
   const [sobrenome, setSobrenome] = useState('');
-
-  /* REGIÃO / CIDADE (PokéAPI) */
   const [regioes, setRegioes] = useState<ApiItem[]>([]);
   const [regiao, setRegiao] = useState('');
   const [cidades, setCidades] = useState<ApiItem[]>([]);
   const [cidade, setCidade] = useState('');
-
-  /* POKÉMONS */
   const [pokemonOptions, setPokemonOptions] = useState<ApiItem[]>([]);
   const [pokemons, setPokemons] = useState<Pokemon[]>([{ id: 1, nome: '' }]);
-
-  /* DATA / HORÁRIO */
-  // const [datas, setDatas] = useState<string[]>([]);
-  // const [horarios, setHorarios] = useState<string[]>([]);
-  // const [dataAtendimento, setDataAtendimento] = useState('');
-  // const [horarioAtendimento, setHorarioAtendimento] = useState('');
-
-  /* MODAL */
   const [modalOpen, setModalOpen] = useState(false);
 
-  /* VALORES */
   const valorUnitario = 70;
   const taxaGeneracional = 2.1;
   const subtotal = pokemons.length * valorUnitario;
   const total = subtotal + taxaGeneracional;
 
-  /* ========================= USEEFFECTS ========================= */
   useEffect(() => {
     fetch('https://pokeapi.co/api/v2/region')
       .then(res => res.json())
@@ -64,7 +50,6 @@ export default function FormAgendamento() {
       .catch(() => alert('Erro ao carregar pokémons.'));
   }, []);
 
-  /* ========================= FUNÇÕES POKÉMON ========================= */
   const adicionarPokemon = () => {
     if (pokemons.length >= 6) return;
     setPokemons([...pokemons, { id: pokemons.length + 1, nome: '' }]);
@@ -78,80 +63,96 @@ export default function FormAgendamento() {
     setPokemons(pokemons.map(p => (p.id === id ? { ...p, nome } : p)));
   };
 
-  /* ========================= SUBMIT ========================= */
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setModalOpen(true);
   };
 
-  /* ========================= RESET FORM ========================= */
   const resetForm = () => {
     setNome('');
     setSobrenome('');
     setRegiao('');
     setCidade('');
     setPokemons([{ id: 1, nome: '' }]);
-    // setDataAtendimento('');
-    // setHorarioAtendimento('');
   };
 
-  /* ========================= RENDER ========================= */
   return (
     <>
       <form className={styles.form} onSubmit={handleSubmit}>
-        <h1>Agendar Consulta</h1>
+        <h1>Preencha o formulário abaixo para agendar sua consulta</h1>
 
-        <input
-          placeholder="Nome"
-          value={nome}
-          onChange={e => setNome(e.target.value)}
-          required
-        />
-        <input
-          placeholder="Sobrenome"
-          value={sobrenome}
-          onChange={e => setSobrenome(e.target.value)}
-          required
-        />
+        {/* NOME */}
+        <div className={styles.inputGroup}>
+          <label htmlFor="nome">Nome</label>
+          <input
+            id="nome"
+            placeholder="Digite seu nome"
+            value={nome}
+            onChange={e => setNome(e.target.value)}
+            required
+          />
+        </div>
+
+        {/* SOBRENOME */}
+        <div className={styles.inputGroup}>
+          <label htmlFor="sobrenome">Sobrenome</label>
+          <input
+            id="sobrenome"
+            placeholder="Digite seu sobrenome"
+            value={sobrenome}
+            onChange={e => setSobrenome(e.target.value)}
+            required
+          />
+        </div>
 
         {/* REGIÃO */}
-        <select
-          value={regiao}
-          onChange={e => {
-            setRegiao(e.target.value);
-            setCidade('');
-          }}
-          required
-        >
-          <option value="">Selecione a região</option>
-          {regioes.map(r => (
-            <option key={r.name} value={r.name}>
-              {r.name}
-            </option>
-          ))}
-        </select>
+        <div className={styles.inputGroup}>
+          <label htmlFor="regiao">Região</label>
+          <select
+            id="regiao"
+            value={regiao}
+            onChange={e => {
+              setRegiao(e.target.value);
+              setCidade('');
+            }}
+            required
+          >
+            <option value="">Selecione sua região</option>
+            {regioes.map(r => (
+              <option key={r.name} value={r.name}>
+                {r.name}
+              </option>
+            ))}
+          </select>
+        </div>
 
         {/* CIDADE */}
-        <select
-          value={cidade}
-          onChange={e => setCidade(e.target.value)}
-          required
-          disabled={!regiao}
-        >
-          <option value="">Selecione a cidade</option>
-          {cidades.map(c => (
-            <option key={c.name} value={c.name}>
-              {c.name}
-            </option>
-          ))}
-        </select>
+        <div className={styles.inputGroup}>
+          <label htmlFor="cidade">Cidade</label>
+          <select
+            id="cidade"
+            value={cidade}
+            onChange={e => setCidade(e.target.value)}
+            required
+            disabled={!regiao}
+          >
+            <option value="">Selecione sua cidade</option>
+            {cidades.map(c => (
+              <option key={c.name} value={c.name}>
+                {c.name}
+              </option>
+            ))}
+          </select>
+        </div>
 
         {/* POKÉMONS */}
         <div className={styles.pokemons}>
-          <p>Time Pokémon (até 6):</p>
-          {pokemons.map(p => (
-            <div key={p.id}>
+          <p>Cadastre seu time (até 6 Pokémons)</p>
+          {pokemons.map((p, index) => (
+            <div key={p.id} className={styles.pokemonRow}>
+              <label htmlFor={`pokemon-${p.id}`}>Pokémon {index + 1}</label>
               <select
+                id={`pokemon-${p.id}`}
                 value={p.nome}
                 onChange={e => atualizarPokemon(p.id, e.target.value)}
                 required
@@ -164,51 +165,26 @@ export default function FormAgendamento() {
                 ))}
               </select>
               {pokemons.length > 1 && (
-                <button type="button" onClick={() => removerPokemon(p.id)}>
+                <button
+                  type="button"
+                  className={styles.removeButton}
+                  onClick={() => removerPokemon(p.id)}
+                >
                   Remover
                 </button>
               )}
             </div>
           ))}
           {pokemons.length < 6 && (
-            <button type="button" onClick={adicionarPokemon}>
+            <button
+              type="button"
+              className={styles.addButton}
+              onClick={adicionarPokemon}
+            >
               Adicionar Pokémon
             </button>
           )}
         </div>
-
-        {/* DATA / HORÁRIO */}
-        {/*
-        <select
-          value={dataAtendimento}
-          onChange={e => {
-            setDataAtendimento(e.target.value);
-            setHorarioAtendimento('');
-          }}
-          required
-        >
-          <option value="">Selecione a data</option>
-          {datas.map(d => (
-            <option key={d} value={d}>
-              {d}
-            </option>
-          ))}
-        </select>
-
-        <select
-          value={horarioAtendimento}
-          onChange={e => setHorarioAtendimento(e.target.value)}
-          required
-          disabled={!dataAtendimento}
-        >
-          <option value="">Selecione o horário</option>
-          {horarios.map(h => (
-            <option key={h} value={h}>
-              {h}
-            </option>
-          ))}
-        </select>
-        */}
 
         {/* RESUMO */}
         <div className={styles.resumo}>
@@ -221,7 +197,7 @@ export default function FormAgendamento() {
         <button type="submit">Concluir Agendamento</button>
       </form>
 
-      {/* ========================= MODAL ========================= */}
+      {/* MODAL */}
       <Modal
         isOpen={modalOpen}
         nome={nome}
@@ -229,8 +205,8 @@ export default function FormAgendamento() {
         regiao={regiao}
         cidade={cidade}
         pokemons={pokemons.map(p => p.nome)}
-        date="xx/xx/xx" // Placeholder
-        time="00h00"   // Placeholder
+        date="xx/xx/xx"
+        time="00h00"
         onClose={() => {
           setModalOpen(false);
           resetForm();

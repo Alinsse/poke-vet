@@ -1,13 +1,71 @@
-.formButton {
-  background-color: #0070f3;
-  color: #fff;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
+.form {
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: center;
 }
 
-.formButton:hover {
-  background-color: #0051a3;
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  width: 100%;
+}
+
+.inputGroup input,
+.inputGroup select {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+.pokemons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  align-items: center;
+}
+
+.pokemonRow {
+  display: flex;
+  flex-direction: column; /* label acima do select */
+  align-items: center;
+  width: 100%;
+  gap: 0.3rem;
+  position: relative;
+}
+
+.pokemonRow select {
+  width: 100%;
+  padding: 0.5rem;
+}
+
+.removeButton {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #e40f0f;
+  color: white;
+  border: none;
+  padding: 0.3rem 0.5rem;
+  cursor: pointer;
+}
+
+.addButton {
+  padding: 0.5rem 1rem;
+  background-color: #e40f0f;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+.resumo {
+  text-align: center;
+  margin-top: 1rem;
 }

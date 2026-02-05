@@ -18,23 +18,34 @@ export default function Header() {
     home: 'Home',
     'agendar-consulta': 'Agendar Consulta',
     'quem-somos': 'Quem Somos',
-    sucesso: 'Sucesso',
-    falha: 'Falha',
   };
 
-  // Always start from Home
-  const parts = [{ href: '/home', label: 'Home' }].concat(
+  // Breadcrumb dinâmico
+  const breadcrumbParts = [{ href: '/home', label: 'Home' }].concat(
     segments.map((seg, i) => ({
       href: '/' + segments.slice(0, i + 1).join('/'),
       label: labels[seg] || prettify(seg),
     }))
   );
 
+  // Título e subtítulo dinâmicos
+  let pageTitle = '';
+  let pageSubtitle = '';
+
+  if (pathname.includes('quem-somos')) {
+    pageTitle = 'Quem Somos';
+    pageSubtitle = 'A maior rede de tratamento Pokémon';
+  } else if (pathname.includes('agendar-consulta')) {
+    pageTitle = 'Agendar Consulta';
+    pageSubtitle = 'Recupere seus pokémons em 5 segundos';
+  }
+
   return (
-    <header className={styles.header} aria-label="Página cabeçalho">
+    <header className={styles.header} aria-label="Cabeçalho da página">
+      {/* Breadcrumb */}
       <nav className={styles.breadcrumbs}>
-        {parts.map((p, idx) => {
-          const isLast = idx === parts.length - 1;
+        {breadcrumbParts.map((p, idx) => {
+          const isLast = idx === breadcrumbParts.length - 1;
           return (
             <span key={p.href}>
               {!isLast ? (
@@ -44,11 +55,19 @@ export default function Header() {
               ) : (
                 <span className={styles.breadcrumbCurrent}>{p.label}</span>
               )}
-              {idx < parts.length - 1 && <span className={styles.separator}>›</span>}
+              {idx < breadcrumbParts.length - 1 && (
+                <span className={styles.separator}>›</span>
+              )}
             </span>
           );
         })}
       </nav>
+
+      {/* Título da página */}
+      <div className={styles.pageTitle}>{pageTitle}</div>
+
+      {/* Subtítulo / slogan */}
+      <div className={styles.pageSubtitle}>{pageSubtitle}</div>
     </header>
   );
 }

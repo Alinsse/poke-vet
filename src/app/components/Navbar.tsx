@@ -6,9 +6,14 @@ import styles from './Navbar.module.scss';
 export default function Navbar() {
   return (
     <nav className={styles.nav} aria-label="Navegação principal">
-      <Link href="/home">Home</Link>
-      <Link href="/quem-somos">Quem Somos</Link>
-      <Link href="/agendar-consulta">Agendar Consulta</Link>
+      <div className={styles.navRight}>
+        <Link href="/quem-somos" className={styles.link}>
+          Quem Somos
+        </Link>
+        <Link href="/agendar-consulta" className={styles.link}>
+          Agendar Consulta
+        </Link>
+      </div>
     </nav>
   );
 }
