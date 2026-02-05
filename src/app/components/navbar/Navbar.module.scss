@@ -1,0 +1,31 @@
+.navbar {
+  width: 100%;
+  height: 105px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 32px;
+  background-color: #fff;
+}
+
+.left,
+.center,
+.right {
+  display: flex;
+  align-items: center;
+}
+
+.center {
+  position: absolute;
+  left: 83px; /* conforme sua especificação */
+  top: 22px;
+}
+
+.right a {
+  margin-left: 24px;
+  text-decoration: none;
+  color: #000;
+  font-weight: 500;
+}
